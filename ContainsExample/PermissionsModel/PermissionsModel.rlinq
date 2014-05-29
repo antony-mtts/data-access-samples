@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DomainModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="2.0.0.0" name="PermissionsModel" namespace="PermissionsEntitiesModel" showPropertiesCompartment="true" xmlns="http://www.telerik.com/ORM">
+  <orm:orm name="PermissionsModel" backend="mssql" default-schema="dbo" xmlns:orm="http://tempuri.org/ORM">
+    <orm:namespace name="PermissionsEntitiesModel" default="true">
+      <orm:class name="Permission" uniqueId="c7e31991-ff7d-49c4-bc96-c00dbb01e4ca">
+        <orm:table name="Permissions" />
+        <orm:identity>
+          <orm:multiple-field>
+            <orm:single-field field-name="_userID" />
+            <orm:single-field field-name="_grantedPermission" />
+            <orm:single-field field-name="_dBObjectName" />
+          </orm:multiple-field>
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_userID" property="UserID" behavior="readwrite" uniqueId="f2ec76b1-f3d5-4afc-8cf2-fbfc0f25333f" type="System.Int32">
+          <orm:column name="UserID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_grantedPermission" property="GrantedPermission" behavior="readwrite" uniqueId="322f9537-f386-4871-b4f5-aab2323de8c6" type="System.String">
+          <orm:column name="GrantedPermission" sql-type="varchar" nullable="false" length="255" scale="0" primary-key="true" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_dBObjectName" property="DBObjectName" behavior="readwrite" uniqueId="c1c64b09-3b47-4e62-bb8c-1d287faf53dd" type="System.String">
+          <orm:column name="DBObjectName" sql-type="varchar" nullable="false" length="255" scale="0" primary-key="true" ado-type="StringVariableLength" />
+        </orm:field>
+      </orm:class>
+    </orm:namespace>
+    <orm:schema schema="">
+      <orm:table name="Permissions">
+        <orm:column name="UserID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" ado-type="Int32" />
+        <orm:column name="GrantedPermission" sql-type="varchar" nullable="false" length="255" scale="0" primary-key="true" ado-type="StringVariableLength" />
+        <orm:column name="DBObjectName" sql-type="varchar" nullable="false" length="255" scale="0" primary-key="true" ado-type="StringVariableLength" />
+      </orm:table>
+    </orm:schema>
+    <orm:relational-naming-settings>
+      <orm:remove-leading-underscore>False</orm:remove-leading-underscore>
+      <orm:source-strategy>Property</orm:source-strategy>
+      <orm:remove-camel-case>False</orm:remove-camel-case>
+    </orm:relational-naming-settings>
+  </orm:orm>
+  <ModelSettings xmlns="">
+    <AppConfigConnectionPropertyName>PermissionsConnection</AppConfigConnectionPropertyName>
+    <AppConfigConnectionString>Data Source=.\first;Initial Catalog=Permissions;Integrated Security=True</AppConfigConnectionString>
+    <InitialCatalog>Permissions</InitialCatalog>
+    <NamingSettings>
+      <ClassRules>
+        <CaseMode>PascalCase</CaseMode>
+        <PluralizationMode>Singularize</PluralizationMode>
+      </ClassRules>
+      <FieldRules>
+        <AddPrefix>_</AddPrefix>
+        <CaseMode>CamelCase</CaseMode>
+      </FieldRules>
+      <PropertyRules>
+        <CaseMode>PascalCase</CaseMode>
+      </PropertyRules>
+      <NavigationPropertyRules />
+    </NamingSettings>
+    <CodeGenerationSettings>
+      <MappingDefinitionType>Xml</MappingDefinitionType>
+    </CodeGenerationSettings>
+    <SchemaUpdateSettings>
+      <DeploymentProject>PermissionsModel</DeploymentProject>
+    </SchemaUpdateSettings>
+    <BackendConfigurationSettings>
+      <BackendConfiguration>
+        <Backend>MsSql</Backend>
+        <ProviderName>System.Data.SqlClient</ProviderName>
+        <Logging>
+          <MetricStoreSnapshotInterval>0</MetricStoreSnapshotInterval>
+        </Logging>
+      </BackendConfiguration>
+    </BackendConfigurationSettings>
+  </ModelSettings>
+  <Types>
+    <DomainClass Id="c7e31991-ff7d-49c4-bc96-c00dbb01e4ca" name="Permission" namespace="PermissionsEntitiesModel" showPropertiesCompartment="true" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true">
+      <Property Id="c1c64b09-3b47-4e62-bb8c-1d287faf53dd" name="DBObjectName" label="DBObjectName : String" kind="Persistent" identity="true" fieldName="_dBObjectName" />
+      <Property Id="322f9537-f386-4871-b4f5-aab2323de8c6" name="GrantedPermission" label="GrantedPermission : String" kind="Persistent" identity="true" fieldName="_grantedPermission" />
+      <Property Id="f2ec76b1-f3d5-4afc-8cf2-fbfc0f25333f" name="UserID" type="Int32" label="UserID : Int32" kind="Persistent" identity="true" fieldName="_userID" />
+    </DomainClass>
+  </Types>
+  <domainContext>
+    <domainModelHasDomainContext Id="2bf24992-6939-47ee-832c-ff9dad6f7e40">
+      <domainContainer name="PermissionsModel" namespace="PermissionsEntitiesModel" showPropertiesCompartment="true">
+        <entitySetProperty name="Permissions" namespace="PermissionsEntitiesModel" type="Permission" label="Permissions : IQueryable&lt;PermissionsEntitiesModel.Permission&gt;" />
+      </domainContainer>
+    </domainModelHasDomainContext>
+  </domainContext>
+</DomainModel>

@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DomainModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="2.0.0.0" name="UsersModel" namespace="UsersEntitiesModel" showPropertiesCompartment="true" xmlns="http://www.telerik.com/ORM">
+  <orm:orm name="UsersModel" backend="mssql" default-schema="dbo" xmlns:orm="http://tempuri.org/ORM">
+    <orm:namespace name="UsersEntitiesModel" default="true">
+      <orm:class name="User" uniqueId="e3a5f635-4278-4b94-bb12-850f6175ed55">
+        <orm:table name="User" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="UserID" />
+          </orm:key-generator>
+          <orm:single-field field-name="_userID" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_userPassword" property="UserPassword" behavior="readwrite" uniqueId="c5309bf7-94bf-4a7c-a48d-5046e5a0c75f" type="System.String">
+          <orm:column name="UserPassword" sql-type="varchar" nullable="true" length="255" scale="0" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_userName" property="UserName" behavior="readwrite" uniqueId="8919ab82-aa70-4be1-87f2-3710f8c826eb" type="System.String">
+          <orm:column name="UserName" sql-type="varchar" nullable="true" length="255" scale="0" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_userID" property="UserID" behavior="readwrite" uniqueId="7b31b976-69b4-4fbc-b362-7bca573c593a" type="System.Int32">
+          <orm:column name="UserID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_userEmail" property="UserEmail" behavior="readwrite" uniqueId="6f569191-8088-47fc-bbb8-480c9ad0cc50" type="System.String">
+          <orm:column name="UserEmail" sql-type="varchar" nullable="true" length="255" scale="0" ado-type="StringVariableLength" />
+        </orm:field>
+        <orm:field name="_lastActiveDate" property="LastActiveDate" behavior="readwrite" uniqueId="85035369-5ed2-4944-9e56-5220f80238c1" type="System.DateTime">
+          <orm:column name="LastActiveDate" sql-type="datetime" nullable="false" length="0" scale="0" ado-type="DateTime" />
+        </orm:field>
+        <orm:field name="_isOnLine" property="IsOnLine" behavior="readwrite" uniqueId="9a673571-2f7b-42bf-bfb5-7986ebe4e925" type="System.Boolean">
+          <orm:column name="IsOnLine" sql-type="bit" nullable="false" length="0" scale="0" ado-type="Bit" />
+        </orm:field>
+      </orm:class>
+    </orm:namespace>
+    <orm:schema schema="">
+      <orm:table name="User">
+        <orm:column name="UserPassword" sql-type="varchar" nullable="true" length="255" scale="0" ado-type="StringVariableLength" />
+        <orm:column name="UserName" sql-type="varchar" nullable="true" length="255" scale="0" ado-type="StringVariableLength" />
+        <orm:column name="UserID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="UserEmail" sql-type="varchar" nullable="true" length="255" scale="0" ado-type="StringVariableLength" />
+        <orm:column name="LastActiveDate" sql-type="datetime" nullable="false" length="0" scale="0" ado-type="DateTime" />
+        <orm:column name="IsOnLine" sql-type="bit" nullable="false" length="0" scale="0" ado-type="Bit" />
+      </orm:table>
+    </orm:schema>
+    <orm:relational-naming-settings>
+      <orm:remove-leading-underscore>False</orm:remove-leading-underscore>
+      <orm:source-strategy>Property</orm:source-strategy>
+      <orm:remove-camel-case>False</orm:remove-camel-case>
+    </orm:relational-naming-settings>
+  </orm:orm>
+  <ModelSettings xmlns="">
+    <AppConfigConnectionPropertyName>UsersConnection</AppConfigConnectionPropertyName>
+    <AppConfigConnectionString>Data Source=.\first;Initial Catalog=Users;Integrated Security=True</AppConfigConnectionString>
+    <InitialCatalog>Users</InitialCatalog>
+    <NamingSettings>
+      <ClassRules>
+        <CaseMode>PascalCase</CaseMode>
+        <PluralizationMode>Singularize</PluralizationMode>
+      </ClassRules>
+      <FieldRules>
+        <AddPrefix>_</AddPrefix>
+        <CaseMode>CamelCase</CaseMode>
+      </FieldRules>
+      <PropertyRules>
+        <CaseMode>PascalCase</CaseMode>
+      </PropertyRules>
+      <NavigationPropertyRules />
+    </NamingSettings>
+    <CodeGenerationSettings>
+      <MappingDefinitionType>Xml</MappingDefinitionType>
+    </CodeGenerationSettings>
+    <SchemaUpdateSettings>
+      <DeploymentProject>UsersModel</DeploymentProject>
+    </SchemaUpdateSettings>
+    <BackendConfigurationSettings>
+      <BackendConfiguration>
+        <Backend>MsSql</Backend>
+        <ProviderName>System.Data.SqlClient</ProviderName>
+        <Logging>
+          <MetricStoreSnapshotInterval>0</MetricStoreSnapshotInterval>
+        </Logging>
+      </BackendConfiguration>
+    </BackendConfigurationSettings>
+  </ModelSettings>
+  <Types>
+    <DomainClass Id="e3a5f635-4278-4b94-bb12-850f6175ed55" name="User" namespace="UsersEntitiesModel" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="UserID">
+      <Property Id="7b31b976-69b4-4fbc-b362-7bca573c593a" name="UserID" type="Int32" label="UserID : Int32" kind="Persistent" identity="true" fieldName="_userID" />
+      <Property Id="9a673571-2f7b-42bf-bfb5-7986ebe4e925" name="IsOnLine" type="Boolean" label="IsOnLine : Boolean" kind="Persistent" fieldName="_isOnLine" />
+      <Property Id="85035369-5ed2-4944-9e56-5220f80238c1" name="LastActiveDate" type="DateTime" label="LastActiveDate : DateTime" kind="Persistent" fieldName="_lastActiveDate" />
+      <Property Id="6f569191-8088-47fc-bbb8-480c9ad0cc50" name="UserEmail" label="UserEmail : String" kind="Persistent" fieldName="_userEmail" />
+      <Property Id="8919ab82-aa70-4be1-87f2-3710f8c826eb" name="UserName" label="UserName : String" kind="Persistent" fieldName="_userName" />
+      <Property Id="c5309bf7-94bf-4a7c-a48d-5046e5a0c75f" name="UserPassword" label="UserPassword : String" kind="Persistent" fieldName="_userPassword" />
+    </DomainClass>
+  </Types>
+  <domainContext>
+    <domainModelHasDomainContext Id="8be3953f-c8f9-4a4e-992e-03f5569bde39">
+      <domainContainer name="UsersModel" namespace="UsersEntitiesModel" showPropertiesCompartment="true">
+        <entitySetProperty name="Users" namespace="UsersEntitiesModel" type="User" label="Users : IQueryable&lt;UsersEntitiesModel.User&gt;" />
+      </domainContainer>
+    </domainModelHasDomainContext>
+  </domainContext>
+</DomainModel>
