@@ -1,0 +1,260 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<DomainModel xmlns:dm0="http://schemas.microsoft.com/VisualStudio/2008/DslTools/Core" dslVersion="2.0.0.0" name="EntitiesModel" namespace="WebApplicationModel" showPropertiesCompartment="true" xmlns="http://www.telerik.com/ORM">
+  <orm:orm name="EntitiesModel" backend="mssql" default-schema="dbo" xmlns:orm="http://tempuri.org/ORM">
+    <orm:namespace name="WebApplicationModel" default="true">
+      <orm:class name="Product" uniqueId="3727c9e4-3676-4d7c-96a9-b631bdb7af98">
+        <orm:table name="Products" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="ProductID" />
+          </orm:key-generator>
+          <orm:single-field field-name="_productID" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_productID" property="ProductID" behavior="readwrite" uniqueId="4485a2b3-2f87-4f85-b00b-44d42876570a" type="System.Int32">
+          <orm:column name="ProductID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_productName" property="ProductName" behavior="readwrite" uniqueId="d0a2a9e7-3378-4e93-862e-18a07168b35d" type="System.String">
+          <orm:column name="ProductName" sql-type="nvarchar" nullable="false" length="40" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_supplierID" property="SupplierID" behavior="readwrite" uniqueId="cb0d11dd-89c4-4e32-ba45-4ea802ba420a" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="SupplierID" sql-type="int" nullable="true" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_categoryID" property="CategoryID" behavior="readwrite" uniqueId="b54e569e-5601-4266-a71f-e41b0481beef" type="System.Nullable`1[[System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="CategoryID" sql-type="int" nullable="true" length="0" scale="0" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_quantityPerUnit" property="QuantityPerUnit" behavior="readwrite" uniqueId="0a438c42-6531-456d-87a8-90ce90137992" type="System.String">
+          <orm:column name="QuantityPerUnit" sql-type="nvarchar" nullable="true" length="20" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_unitPrice" property="UnitPrice" behavior="readwrite" uniqueId="eb698a3d-01d1-4512-97c5-ced85d500512" type="System.Nullable`1[[System.Decimal, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="UnitPrice" sql-type="money" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Currency" />
+        </orm:field>
+        <orm:field name="_unitsInStock" property="UnitsInStock" behavior="readwrite" uniqueId="6e9dda33-da6a-4da5-8de9-e17618c08459" type="System.Nullable`1[[System.Int16, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="UnitsInStock" sql-type="smallint" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int16" />
+        </orm:field>
+        <orm:field name="_unitsOnOrder" property="UnitsOnOrder" behavior="readwrite" uniqueId="4cbe59fc-8a5a-4c5e-b1dd-b0a65dbbb954" type="System.Nullable`1[[System.Int16, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="UnitsOnOrder" sql-type="smallint" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int16" />
+        </orm:field>
+        <orm:field name="_reorderLevel" property="ReorderLevel" behavior="readwrite" uniqueId="89acf1cc-ee42-42d9-a973-a5d3e408e1e3" type="System.Nullable`1[[System.Int16, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]">
+          <orm:column name="ReorderLevel" sql-type="smallint" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int16" />
+        </orm:field>
+        <orm:field name="_discontinued" property="Discontinued" behavior="readwrite" uniqueId="f3cee5d6-d7b8-45bf-84ac-85728f6ebffd" type="System.Boolean">
+          <orm:column name="Discontinued" sql-type="bit" nullable="false" length="0" scale="0" has-default-value="true" ado-type="Bit" />
+        </orm:field>
+        <orm:field name="_category" property="Category" behavior="readwrite" uniqueId="f1ecf188-5c84-4139-a46d-6ee0a81947b9" type="WebApplicationModel.Category">
+          <orm:reference uniqueId="3fc496e5-befa-4707-8b88-b7721ad90efd" association-name="ProductHasCategory">
+            <orm:sharedfield name="_categoryID" target-class="WebApplicationModel.Category" target-field="_categoryID" />
+            <orm:constraint name="FK_Products_Categories" delete-action="dbdefaultrule" destination-table="Categories" />
+          </orm:reference>
+        </orm:field>
+        <orm:index name="CategoriesProducts">
+          <orm:columnMapping>
+            <orm:column name="CategoryID" sql-type="int" nullable="true" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:index name="CategoryID">
+          <orm:columnMapping>
+            <orm:column name="CategoryID" sql-type="int" nullable="true" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:index name="ProductName">
+          <orm:columnMapping>
+            <orm:column name="ProductName" sql-type="nvarchar" nullable="false" length="40" scale="0" ado-type="UnicodeStringVariableLength" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:index name="SupplierID">
+          <orm:columnMapping>
+            <orm:column name="SupplierID" sql-type="int" nullable="true" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:index name="SuppliersProducts">
+          <orm:columnMapping>
+            <orm:column name="SupplierID" sql-type="int" nullable="true" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+      </orm:class>
+      <orm:class name="Category" uniqueId="73f9e11d-856e-4870-be10-592c0c22713b">
+        <orm:table name="Categories" />
+        <orm:identity>
+          <orm:key-generator name="autoinc">
+            <orm:key-generator-member property-name="CategoryID" />
+          </orm:key-generator>
+          <orm:single-field field-name="_categoryID" />
+        </orm:identity>
+        <orm:concurrency strategy="changed" />
+        <orm:field name="_categoryID" property="CategoryID" behavior="readwrite" uniqueId="21ccfc48-e9c0-41c0-aca3-88258d1bcf69" type="System.Int32">
+          <orm:column name="CategoryID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        </orm:field>
+        <orm:field name="_categoryName" property="CategoryName" behavior="readwrite" uniqueId="4d2c83e5-f060-4a87-91f4-f031eba4874a" type="System.String">
+          <orm:column name="CategoryName" sql-type="nvarchar" nullable="false" length="15" scale="0" ado-type="UnicodeStringVariableLength" />
+        </orm:field>
+        <orm:field name="_description" property="Description" behavior="readwrite" uniqueId="66bb1b7a-1821-4a4b-9bc5-9a019a26d916" type="System.String">
+          <orm:column name="Description" sql-type="ntext" nullable="true" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        </orm:field>
+        <orm:field name="_picture" property="Picture" behavior="readwrite" uniqueId="54260ab6-5a8d-4909-b219-e450ee56914d" type="System.Byte[]">
+          <orm:column name="Picture" sql-type="image" nullable="true" length="0" scale="0" ado-type="LongVarBinary" />
+        </orm:field>
+        <orm:field name="_products" property="Products" behavior="readwrite" uniqueId="6d49308c-934b-43e0-a14f-664f56a3c1ec" type="WebApplicationModel.Product">
+          <orm:collection element-class="WebApplicationModel.Product" inverse-field="_category" order-by="" uniqueId="3fc496e5-befa-4707-8b88-b7721ad90efd" />
+        </orm:field>
+        <orm:index name="CategoryName">
+          <orm:columnMapping>
+            <orm:column name="CategoryName" sql-type="nvarchar" nullable="false" length="15" scale="0" ado-type="UnicodeStringVariableLength" />
+          </orm:columnMapping>
+        </orm:index>
+      </orm:class>
+    </orm:namespace>
+    <orm:schema schema="">
+      <orm:table name="Products">
+        <orm:column name="ProductID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="ProductName" sql-type="nvarchar" nullable="false" length="40" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="SupplierID" sql-type="int" nullable="true" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="CategoryID" sql-type="int" nullable="true" length="0" scale="0" ado-type="Int32" />
+        <orm:column name="QuantityPerUnit" sql-type="nvarchar" nullable="true" length="20" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="UnitPrice" sql-type="money" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Currency" />
+        <orm:column name="UnitsInStock" sql-type="smallint" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int16" />
+        <orm:column name="UnitsOnOrder" sql-type="smallint" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int16" />
+        <orm:column name="ReorderLevel" sql-type="smallint" nullable="true" length="0" scale="0" has-default-value="true" ado-type="Int16" />
+        <orm:column name="Discontinued" sql-type="bit" nullable="false" length="0" scale="0" has-default-value="true" ado-type="Bit" />
+        <orm:index name="CategoriesProducts">
+          <orm:columnMapping>
+            <orm:column name="CategoryID" sql-type="int" nullable="true" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:index name="CategoryID">
+          <orm:columnMapping>
+            <orm:column name="CategoryID" sql-type="int" nullable="true" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:index name="ProductName">
+          <orm:columnMapping>
+            <orm:column name="ProductName" sql-type="nvarchar" nullable="false" length="40" scale="0" ado-type="UnicodeStringVariableLength" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:index name="SupplierID">
+          <orm:columnMapping>
+            <orm:column name="SupplierID" sql-type="int" nullable="true" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:index name="SuppliersProducts">
+          <orm:columnMapping>
+            <orm:column name="SupplierID" sql-type="int" nullable="true" length="0" scale="0" ado-type="Int32" />
+          </orm:columnMapping>
+        </orm:index>
+        <orm:constraint name="FK_Products_Categories" delete-action="dbdefaultrule" destination-table="Categories">
+          <orm:column name="CategoryID" sql-type="int" nullable="true" length="0" scale="0" ado-type="Int32" />
+        </orm:constraint>
+      </orm:table>
+      <orm:table name="Categories">
+        <orm:column name="CategoryID" sql-type="int" nullable="false" length="0" scale="0" primary-key="true" backend-calculated="true" ado-type="Int32" />
+        <orm:column name="CategoryName" sql-type="nvarchar" nullable="false" length="15" scale="0" ado-type="UnicodeStringVariableLength" />
+        <orm:column name="Description" sql-type="ntext" nullable="true" length="0" scale="0" ado-type="UnicodeStringInfiniteLength" />
+        <orm:column name="Picture" sql-type="image" nullable="true" length="0" scale="0" ado-type="LongVarBinary" />
+        <orm:index name="CategoryName">
+          <orm:columnMapping>
+            <orm:column name="CategoryName" sql-type="nvarchar" nullable="false" length="15" scale="0" ado-type="UnicodeStringVariableLength" />
+          </orm:columnMapping>
+        </orm:index>
+      </orm:table>
+    </orm:schema>
+    <orm:relational-naming-settings>
+      <orm:remove-leading-underscore>False</orm:remove-leading-underscore>
+      <orm:source-strategy>Property</orm:source-strategy>
+      <orm:remove-camel-case>False</orm:remove-camel-case>
+    </orm:relational-naming-settings>
+  </orm:orm>
+  <ModelSettings xmlns="">
+    <AppConfigConnectionPropertyName>NorthwindConnection</AppConfigConnectionPropertyName>
+    <AppConfigConnectionString>Data Source=.\sqlexpress;Initial Catalog=Northwind;Integrated Security=True</AppConfigConnectionString>
+    <InitialCatalog>Northwind</InitialCatalog>
+    <NamingSettings>
+      <ClassRules>
+        <CaseMode>PascalCase</CaseMode>
+        <PluralizationMode>Singularize</PluralizationMode>
+      </ClassRules>
+      <FieldRules>
+        <AddPrefix>_</AddPrefix>
+        <CaseMode>CamelCase</CaseMode>
+      </FieldRules>
+      <PropertyRules>
+        <CaseMode>PascalCase</CaseMode>
+      </PropertyRules>
+      <NavigationPropertyRules />
+    </NamingSettings>
+    <CodeGenerationSettings>
+      <ImplementISerializable>true</ImplementISerializable>
+      <MappingDefinitionType>Xml</MappingDefinitionType>
+    </CodeGenerationSettings>
+    <SchemaUpdateSettings>
+      <DeploymentProject>WebApplicationModel</DeploymentProject>
+    </SchemaUpdateSettings>
+    <BackendConfigurationSettings>
+      <BackendConfiguration>
+        <Backend>MsSql</Backend>
+        <ProviderName>System.Data.SqlClient</ProviderName>
+        <Logging>
+          <LogLevel>All</LogLevel>
+          <LogFileName>c:\\testrun</LogFileName>
+          <LogToConsole>True</LogToConsole>
+          <EventStoreCapacity>10000</EventStoreCapacity>
+          <MetricStoreCapacity>3600</MetricStoreCapacity>
+          <EventBinary>True</EventBinary>
+          <MetricBinary>True</MetricBinary>
+        </Logging>
+      </BackendConfiguration>
+    </BackendConfigurationSettings>
+  </ModelSettings>
+  <Types>
+    <DomainClass Id="3727c9e4-3676-4d7c-96a9-b631bdb7af98" name="Product" namespace="WebApplicationModel" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="ProductID">
+      <Property Id="4485a2b3-2f87-4f85-b00b-44d42876570a" name="ProductID" type="Int32" label="ProductID : Int32" kind="Persistent" identity="true" fieldName="_productID" />
+      <Property Id="b54e569e-5601-4266-a71f-e41b0481beef" name="CategoryID" type="Int32" label="CategoryID : Int32" nullable="true" kind="Persistent" fieldName="_categoryID" />
+      <Property Id="f3cee5d6-d7b8-45bf-84ac-85728f6ebffd" name="Discontinued" type="Boolean" label="Discontinued : Boolean" kind="Persistent" fieldName="_discontinued" />
+      <Property Id="d0a2a9e7-3378-4e93-862e-18a07168b35d" name="ProductName" label="ProductName : String" kind="Persistent" fieldName="_productName" />
+      <Property Id="0a438c42-6531-456d-87a8-90ce90137992" name="QuantityPerUnit" label="QuantityPerUnit : String" kind="Persistent" fieldName="_quantityPerUnit" />
+      <Property Id="89acf1cc-ee42-42d9-a973-a5d3e408e1e3" name="ReorderLevel" type="Int16" label="ReorderLevel : Int16" nullable="true" kind="Persistent" fieldName="_reorderLevel" />
+      <Property Id="cb0d11dd-89c4-4e32-ba45-4ea802ba420a" name="SupplierID" type="Int32" label="SupplierID : Int32" nullable="true" kind="Persistent" fieldName="_supplierID" />
+      <Property Id="eb698a3d-01d1-4512-97c5-ced85d500512" name="UnitPrice" type="Decimal" label="UnitPrice : Decimal" nullable="true" kind="Persistent" fieldName="_unitPrice" />
+      <Property Id="6e9dda33-da6a-4da5-8de9-e17618c08459" name="UnitsInStock" type="Int16" label="UnitsInStock : Int16" nullable="true" kind="Persistent" fieldName="_unitsInStock" />
+      <Property Id="4cbe59fc-8a5a-4c5e-b1dd-b0a65dbbb954" name="UnitsOnOrder" type="Int16" label="UnitsOnOrder : Int16" nullable="true" kind="Persistent" fieldName="_unitsOnOrder" />
+      <AssociationTargets>
+        <Association Id="3fc496e5-befa-4707-8b88-b7721ad90efd" SourceMultiplicity="ZeroOne" name="ProductHasCategory">
+          <DomainClassMoniker name="/EntitiesModel/Category" />
+          <targetNavigationalProperty>
+            <associationDefinesTargetProperty Id="ba457639-f896-4021-9822-a1025955ef88">
+              <NavigationalPropertyMoniker name="/EntitiesModel/Category/Products" />
+            </associationDefinesTargetProperty>
+          </targetNavigationalProperty>
+          <sourceNavigationalProperty>
+            <associationDefinesSourceProperty Id="36a60117-6245-4ed9-bb6a-c65c693028cd">
+              <NavigationalPropertyMoniker name="/EntitiesModel/Product/Category" />
+            </associationDefinesSourceProperty>
+          </sourceNavigationalProperty>
+        </Association>
+      </AssociationTargets>
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="3934b6ac-5cee-4035-b554-21abe011f5e2">
+          <NavigationalProperty Id="f1ecf188-5c84-4139-a46d-6ee0a81947b9" name="Category" type="Category" label="Category : Category" nullable="true" kind="Persistent" fieldName="_category" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+    <DomainClass Id="73f9e11d-856e-4870-be10-592c0c22713b" name="Category" namespace="WebApplicationModel" showPropertiesCompartment="true" identityMechanism="DatabaseServerCalculated" concurrencyMode="Changed" showNavigationCompartment="true" showImplementationCompartment="true" identityMechanismMember="CategoryID">
+      <Property Id="21ccfc48-e9c0-41c0-aca3-88258d1bcf69" name="CategoryID" type="Int32" label="CategoryID : Int32" kind="Persistent" identity="true" fieldName="_categoryID" />
+      <Property Id="4d2c83e5-f060-4a87-91f4-f031eba4874a" name="CategoryName" label="CategoryName : String" kind="Persistent" fieldName="_categoryName" />
+      <Property Id="66bb1b7a-1821-4a4b-9bc5-9a019a26d916" name="Description" label="Description : String" kind="Persistent" fieldName="_description" />
+      <Property Id="54260ab6-5a8d-4909-b219-e450ee56914d" name="Picture" type="Byte[]" label="Picture : Byte[]" kind="Persistent" fieldName="_picture" />
+      <navigationalProperties>
+        <classHasNavigationalProperties Id="83d0c688-140b-4081-bf6a-d0f7899bac35">
+          <NavigationalProperty Id="6d49308c-934b-43e0-a14f-664f56a3c1ec" name="Products" type="IList&lt;Product&gt;" label="Products : IList&lt;Product&gt;" nullable="true" kind="Persistent" fieldName="_products" isDependent="false" isManaged="false" />
+        </classHasNavigationalProperties>
+      </navigationalProperties>
+    </DomainClass>
+  </Types>
+  <domainContext>
+    <domainModelHasDomainContext Id="54e4e0bb-95ac-4bef-9153-68ece506855c">
+      <domainContainer name="EntitiesModel" namespace="WebApplicationModel" showPropertiesCompartment="true">
+        <entitySetProperty name="Products" namespace="WebApplicationModel" type="Product" label="Products : IQueryable&lt;WebApplicationModel.Product&gt;" />
+        <entitySetProperty name="Categories" namespace="WebApplicationModel" type="Category" label="Categories : IQueryable&lt;WebApplicationModel.Category&gt;" />
+      </domainContainer>
+    </domainModelHasDomainContext>
+  </domainContext>
+</DomainModel>
