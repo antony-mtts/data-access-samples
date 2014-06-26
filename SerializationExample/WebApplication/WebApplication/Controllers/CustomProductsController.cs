@@ -23,7 +23,16 @@ namespace WebApplication
             this.fetchStrategy = new FetchStrategy();
         }
 
-        //Retrieves all the objects of a given persistent entity
+        ///<summary>
+        ///Retrieves all the objects of a given persistent entity.
+        ///</summary>
+        ///<param name="fetchStrategy">
+        ///Specifies which navigation properties of the objects should be populated
+        ///when the objects are retrieved from the database.
+        ///</param>
+        ///<returns>
+        ///The query that will be executed when the result is enumerated.
+        ///</returns>
         private IQueryable<T> Get<T>(FetchStrategy fetchStrategy)
         {
             if (fetchStrategy != null)
@@ -36,7 +45,15 @@ namespace WebApplication
             return entities;
         }
 
-        //Retrieves a subset of the Product objects
+        ///<summary>
+        ///Retrieves a subset of the Product objects.
+        ///</summary>
+        ///<param name="filter">
+        ///Specifies the filter that will be applied on the Product objects.
+        ///</param>
+        ///<returns>
+        ///The query that will be executed when the result is enumerated.
+        ///</returns>
         private IQueryable<Product> GetBy(Expression<Func<Product, bool>> filter)
         {
             if (filter == null)
@@ -49,10 +66,14 @@ namespace WebApplication
             return entity;
         }
 
-        //Retrieves a paged result for all ProductCustomized objects
+        ///<summary>
+        ///Retrieves a paged result for all ProductCustomized objects.
+        ///</summary>
+        ///<returns>
+        ///The query that will be executed when the result is enumerated.
+        ///</returns>
         public virtual PageResult<ProductCustomized> Get(ODataQueryOptions<Product> options)
         {
-            
            IQueryable<Product> entities = this.Get<Product>(new FetchStrategy());
 
            entities = options.ApplyTo(entities) as IQueryable<Product>;
@@ -67,10 +88,18 @@ namespace WebApplication
                              UnitPrice = e.UnitPrice
                          };
 
-            return new PageResult<ProductCustomized>(result as IEnumerable<ProductCustomized>, Request.GetNextPageLink(), Request.GetInlineCount());
+            return new PageResult<ProductCustomized>(result.AsEnumerable(), Request.GetNextPageLink(), Request.GetInlineCount());
         }
 
-        //Retrieves ProductCustomized objects by Id
+        ///<summary>
+        ///Retrieves ProductCustomized objects by Id.
+        ///</summary>
+        ///<param name="id">
+        ///The Id of the Product object that should be retrieved
+        ///</param>
+        ///<returns>
+        ///The ProductCustomized object with the specified Id.
+        ///</returns>
         public virtual ProductCustomized Get(Int32 id)
         {
             IQueryable<Product> entity = this.GetBy(w => w.ProductID == id);
@@ -94,7 +123,15 @@ namespace WebApplication
             return result;
         }
 
-        //Retrieves ProductCustomized objects by name
+        ///<summary>
+        ///Retrieves ProductCustomized objects by name.
+        ///</summary>
+        ///<param name="name">
+        ///The name of the products that should be retrieved.
+        ///</param>
+        ///<returns>
+        ///The ProductCustomized object with name that matches exactly the specified name.
+        ///</returns>
         public virtual IQueryable<ProductCustomized> Get(String name)
         {
             IQueryable<Product> entities = this.GetBy(w => w.ProductName == name);
@@ -117,7 +154,9 @@ namespace WebApplication
             return result;
         }
 
-        //Disposes the instance of the context
+        ///<summary>
+        ///Disposes the instance of the context.
+        ///</summary>
         protected override void Dispose(bool disposing)
         {
             if (dbContext != null)
