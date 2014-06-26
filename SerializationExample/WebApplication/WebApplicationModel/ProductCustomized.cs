@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace WebApplicationModel
 {
@@ -22,7 +19,20 @@ namespace WebApplicationModel
             } 
         }
 
-        public override void GetObjectData(System.Runtime.Serialization.SerializationInfo info, System.Runtime.Serialization.StreamingContext context)
+        public ProductCustomized()
+        {
+        }
+
+        protected ProductCustomized(SerializationInfo info, StreamingContext context)
+        {
+            this.ProductID = info.GetInt32("ProductID");
+            this.ProductName = info.GetString("ProductName");
+            this.CategoryName = (string)info.GetValue("CategoryName", typeof(string));
+            this.QuantityPerUnit = info.GetString("QuantityPerUnit");
+            this.UnitPrice = (decimal?)info.GetValue("UnitPrice", typeof(decimal?));
+        }
+
+        public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             info.AddValue("ProductID", this.ProductID, typeof(int));
             info.AddValue("ProductName", this.ProductName, typeof(string));

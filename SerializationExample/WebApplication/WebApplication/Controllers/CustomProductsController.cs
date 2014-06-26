@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using System.Web.Http.OData;
 using System.Web.Http.OData.Query;
+using Telerik.OpenAccess.FetchOptimization;
 using WebApplicationModel;
 
 namespace WebApplication
@@ -13,72 +15,109 @@ namespace WebApplication
     public class CustomProductsController : ApiController
     {
         protected EntitiesModel dbContext;
+        protected FetchStrategy fetchStrategy;
 
         public CustomProductsController()
         {
             this.dbContext = new EntitiesModel();
+            this.fetchStrategy = new FetchStrategy();
         }
 
-        private IQueryable<ProductCustomized> Get()
+        //Retrieves all the objects of a given persistent entity
+        private IQueryable<T> Get<T>(FetchStrategy fetchStrategy)
         {
-            System.Linq.IQueryable<ProductCustomized> entities =
-                from p in this.dbContext.Products
-                select new ProductCustomized()
-                {
-                    ProductID = p.ProductID,
-                    ProductName = p.ProductName,
-                    CategoryName = p.Category.CategoryName,
-                    QuantityPerUnit = p.QuantityPerUnit,
-                    UnitPrice = p.UnitPrice
-                };
+            if (fetchStrategy != null)
+            {
+                this.dbContext.FetchStrategy = fetchStrategy;                
+            }
 
+            IQueryable<T> entities = this.dbContext.GetAll<T>();
+                
             return entities;
         }
 
-        public virtual PageResult<ProductCustomized> Get(ODataQueryOptions<ProductCustomized> options)
+        //Retrieves a subset of the Product objects
+        private IQueryable<Product> GetBy(Expression<Func<Product, bool>> filter)
         {
-            System.Linq.IQueryable<ProductCustomized> entities = this.Get();
+            if (filter == null)
+                throw new ArgumentNullException("filter");
 
-            var result = options.ApplyTo(entities);
+            fetchStrategy.LoadWith<Product>(p => p.Category);
+
+            IQueryable<Product> entity = this.Get<Product>(fetchStrategy).Where(filter);
+
+            return entity;
+        }
+
+        //Retrieves a paged result for all ProductCustomized objects
+        public virtual PageResult<ProductCustomized> Get(ODataQueryOptions<Product> options)
+        {
+            
+           IQueryable<Product> entities = this.Get<Product>(new FetchStrategy());
+
+           entities = options.ApplyTo(entities) as IQueryable<Product>;
+
+            var result = from e in entities
+                         select new ProductCustomized()
+                         {
+                             ProductID = e.ProductID,
+                             ProductName = e.ProductName,
+                             CategoryName = e.Category.CategoryName,
+                             QuantityPerUnit = e.QuantityPerUnit,
+                             UnitPrice = e.UnitPrice
+                         };
 
             return new PageResult<ProductCustomized>(result as IEnumerable<ProductCustomized>, Request.GetNextPageLink(), Request.GetInlineCount());
         }
 
-        public virtual WebApplicationModel.ProductCustomized Get(Int32 id)
+        //Retrieves ProductCustomized objects by Id
+        public virtual ProductCustomized Get(Int32 id)
         {
-            WebApplicationModel.ProductCustomized entity = this.GetBy(w => w.ProductID == id);
+            IQueryable<Product> entity = this.GetBy(w => w.ProductID == id);
 
             if (entity == null)
             {
                 throw new HttpResponseException(HttpStatusCode.NotFound);
             }
 
-            return entity;
+            Product product = entity.FirstOrDefault();
+
+            ProductCustomized result = new ProductCustomized()
+            {
+                ProductID = product.ProductID,
+                ProductName = product.ProductName,
+                CategoryName = product.Category.CategoryName,
+                QuantityPerUnit = product.QuantityPerUnit,
+                UnitPrice = product.UnitPrice
+            };
+
+            return result;
         }
 
-        private ProductCustomized GetBy(System.Linq.Expressions.Expression<System.Func<ProductCustomized, bool>> filter)
+        //Retrieves ProductCustomized objects by name
+        public virtual IQueryable<ProductCustomized> Get(String name)
         {
-            if (filter == null)
-                throw new ArgumentNullException("filter");
+            IQueryable<Product> entities = this.GetBy(w => w.ProductName == name);
 
-            ProductCustomized entity = this.Get().SingleOrDefault(filter);
+            if (entities == null)
+            {
+                throw new HttpResponseException(HttpStatusCode.NotFound);
+            }
 
-            if (entity == null)
-                return default(ProductCustomized);
+            var result = from e in entities
+                        select new ProductCustomized()
+                        {
+                            ProductID = e.ProductID,
+                            ProductName = e.ProductName,
+                            CategoryName = e.Category.CategoryName,
+                            QuantityPerUnit = e.QuantityPerUnit,
+                            UnitPrice = e.UnitPrice
+                        };
 
-            return entity;
+            return result;
         }
 
-        protected HttpResponseMessage CreateResponse(HttpStatusCode httpStatusCode, WebApplicationModel.ProductCustomized entityToEmbed)
-        {
-            HttpResponseMessage response = Request.CreateResponse<WebApplicationModel.ProductCustomized>(httpStatusCode, entityToEmbed);
-
-            string uri = Url.Link("DefaultApi", new { id = entityToEmbed.ProductID });
-            response.Headers.Location = new Uri(uri);
-
-            return response;
-        }
-
+        //Disposes the instance of the context
         protected override void Dispose(bool disposing)
         {
             if (dbContext != null)
